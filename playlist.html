@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>PartyWall playlist</title>
+	<script src= "js/paho-mqtt-min.js"     type="text/javascript"></script>
+	<script src= "js/jquery-3.3.1.min.js"  type="text/javascript"></script>
+
+	<style>
+		#playlist {
+			font-family: verdana;
+			font-size: 14;
+		}
+	
+	
+		img {
+			border: 2px solid red;
+			width: 100px;
+		}
+	</style>
+
+	<script>
+		var mqtt_broker="camserver.local";
+		var mqtt_port=1884;
+		var mqtt_client=null;
+		
+		
+		// Genera una stringa random di caratteri
+		// Viane usata per le funzioni MQTT
+		var randomString = function(length) {
+		    var text = "";
+		    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		    for(var i = 0; i < length; i++) {
+		        text += possible.charAt(Math.floor(Math.random() * possible.length));
+		    }
+		    return text;
+		}
+		
+		function onMessageArrived(message) {
+			console.log(message.payloadString);
+		}
+	
+		function onConnectionLost(responseObject) {
+			if (responseObject.errorCode !== 0) {
+				console.log("onConnectionLost:"+responseObject.errorMessage);
+			} else {
+				console.log("Sono qui");
+			}
+		}
+
+	
+		function youtube_parser(url){
+			var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+			var match = url.match(regExp);
+			if (match && match[2].length == 11) {
+			  return match[2];
+			} else {
+			  //error
+			}
+		}
+	
+		function getLink(ev) {
+			ev.preventDefault();
+			
+			var data = ev.dataTransfer.getData("text");
+			var youtube_id=youtube_parser(data);
+
+			var message;
+			message = new Paho.MQTT.Message(youtube_id);
+			message.destinationName = "tangowall/youtube_id";
+			mqtt_client.send(message);
+
+			$("#playlist").append('<li><a href="#">' + youtube_id + '</a></li>');
+
+
+		}
+	
+		function allowDrop(ev) {
+			ev.preventDefault();
+		}
+
+		$(document).ready(function() {
+			// Interpretazione messaggi MQTT in arrivo
+			mqtt_client = new Paho.MQTT.Client(mqtt_broker, Number(mqtt_port), "/ws",randomString(20));
+			mqtt_client.onMessageArrived=onMessageArrived;
+			mqtt_client.connect();
+			
+			mqtt_client.onConnectionLost = onConnectionLost;
+		});	
+	</script>
+</head>
+
+<body>
+<img id="getlink" src="/images/drop_instant.jpg" ondrop="getLink(event)" ondragover="allowDrop(event)">
+<ul id="playlist">
+</ul>
+</body>
+</html>

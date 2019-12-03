@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>PartyWall playlist</title>
+	<script src= "js/paho-mqtt-min.js"     type="text/javascript"></script>
+	<script src= "js/jquery-3.3.1.min.js"  type="text/javascript"></script>
+	
+	
+	<link rel="stylesheet" href="style.css">
+
+	<script>
+		var mqtt_broker="camserver.local";
+		var mqtt_port=1884;
+		var mqtt_client=null;
+		
+		// Genera una stringa random di caratteri
+		// Viane usata per le funzioni MQTT
+		var randomString = function(length) {
+		    var text = "";
+		    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		    for(var i = 0; i < length; i++) {
+		        text += possible.charAt(Math.floor(Math.random() * possible.length));
+		    }
+		    return text;
+		}
+		
+		function onConnect() {
+			mqtt_client.subscribe("partywall");
+			console.log("Connesso");
+		}	
+		
+		function onMessageArrived(message) {
+			console.log("Message recived: " + message.payloadString);
+		}
+	
+		function onConnectionLost(responseObject) {
+			if (responseObject.errorCode !== 0) {
+				console.log("onConnectionLost:"+responseObject.errorMessage);
+			} else {
+				console.log("Sono qui");
+			}
+		}
+
+	
+		function youtube_parser(url){
+			var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+			var match = url.match(regExp);
+			if (match && match[2].length == 11) {
+			  return match[2];
+			} else {
+			  //error
+			}
+		}
+		
+
+
+		$(document).ready(function() {
+			// Interpretazione messaggi MQTT in arrivo
+			mqtt_client = new Paho.MQTT.Client(mqtt_broker, Number(mqtt_port), "/ws",randomString(20));
+			mqtt_client.onMessageArrived=onMessageArrived;
+			mqtt_client.connect({
+				onSuccess:onConnect
+			});
+			
+			mqtt_client.onConnectionLost = onConnectionLost;
+		});
+		
+		
+		
+		function create_youtube_id(ev) {
+			var data = ev.dataTransfer.getData("text");
+			var youtube_id=youtube_parser(data);
+			
+			return youtube_id;
+		}
+		
+		function create_MQTT_message(youtube_id) {
+			var message;
+			message = new Paho.MQTT.Message(youtube_id);
+			message.destinationName = "partywall";
+			mqtt_client.send(message);
+		}
+		
+		
+		function allowDrop(ev) {
+			ev.preventDefault();
+		}
+		
+		
+		// Crea un nodo html che corrisponde all'elemento HTML della list
+		function create_youtube_elem_link_box(s) {
+			
+			// Crea un Elemento della lista video
+			var youtube_elem_link = document.createElement("DIV");
+			var img = document.createElement("IMG");
+			var titolo = document.createElement("P");
+			var titolo_text = document.createTextNode(s);
+			titolo.appendChild(titolo_text);
+			
+			youtube_elem_link.appendChild(img);
+			youtube_elem_link.appendChild(titolo);
+			
+			return youtube_elem_link;
+		}
+		
+		// Aggiunge sul DOM l'elemento della list creato con la funzione
+		// create_youtube_elem_link_box(titolo);
+		function add_youtube_elem_on_list(elem) {
+			youtube_list_box_html.appendChild(elem);
+		}
+		
+		// Evento che corrisponde al drop del video
+		function addLinkOnList(youtube_id) {
+			console.log("Adding link: " + youtube_id);
+			
+			var elem = create_youtube_elem_link_box("Youtube videooooo n. " + youtube_id);
+			add_youtube_elem_on_list(elem);
+			
+			console.log("Added link: " + youtube_id);
+		}
+		
+		
+		function onDragVideo(ev) {
+			ev.preventDefault();
+			
+			var youtube_id = create_youtube_id(ev);
+			create_MQTT_message(youtube_id);
+			
+			addLinkOnList(youtube_id);
+			
+		}
+		
+		
+		data = '[
+			{
+				"name" : "Ashwin", 
+				"age" : "20"
+				
+			},
+			{
+				"name" : "Abhinandan", 
+				"age" : "20"
+				
+			}
+		]';
+		
+		videos = []
+
+
+	</script>
+</head>
+
+<body>
+	
+	
+	<header></header>
+	<main>
+		<div class="container left">
+			<img id="getlink" src="images/drophere.jpg" ondrop="onDragVideo(event)" ondragover="allowDrop(event)">
+		</div>
+		<div class="container right">
+			<h1>Lista Link</h1>
+			
+			<div id="youtube-link-list-container">
+				<div class="youtube-link-list-box">
+					<img />
+					<p>Titolo Video</p>
+				</div>
+				<div class="youtube-link-list-box">
+					<img />
+					<p>Titolo Video</p>
+				</div>
+
+			</div>
+
+		</div>
+		
+	</main>
+	<footer></footer>
+	
+	
+	
+</body>
+
+<script>
+
+
+	var youtube_list_box_html = document.getElementById("youtube-link-list-container");
+	console.log(youtube_list_box_html);
+
+
+
+
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

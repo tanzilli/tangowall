@@ -1,0 +1,17 @@
+.contatiner {
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+}
+
+#youtube-link-list-container {
+	
+}
+
+.youtube-link-list-box {
+	height: 120px;
+}

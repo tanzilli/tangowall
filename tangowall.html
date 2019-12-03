@@ -1,0 +1,103 @@
+<!-- TANGOWALL -->
+<!-- https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<script src= "js/paho-mqtt-min.js"     type="text/javascript"></script>
+	<script src= "js/jquery-3.3.1.min.js"  type="text/javascript"></script>
+	<script src= "js/tangowall.js"         type="text/javascript"></script>
+	<script src= "js/twidgets.js"         type="text/javascript"></script>
+
+	<style>
+		* { 
+			padding: 0;
+			margin: 0;
+		}
+
+		body { 
+			background-color: black;
+			padding: 0;
+			margin: 0;
+			color: #FFFFFF; 
+		}
+
+		#label {
+			color: white; 
+			font-size: 64px;
+		}
+		
+		#video_big {
+			position: fixed; 
+			left: 0px; 
+			top: 0px; 
+			display: none;
+		}
+
+		#slot_a {
+			position: fixed; 
+			left: 5px; 
+			top: 10px; 
+			width: 300px;
+		}
+
+		#slot_b {
+			position: fixed;
+			left: 325px;
+			top: 10px;
+			width: 300px;"
+		}
+
+		#slot_c {
+			position: fixed;
+			left: 645px;
+			top: 10px;
+			width: 300px;
+		}
+
+		#clock {
+			position: fixed;
+			left : 965px;
+			top: 80px;
+			width: 300px;
+		}
+	</style>
+
+</head>
+<body>
+	<div id="all">
+		
+		<!-- Video Slot -->
+		<div id="video_slot">
+			<video loop autoplay muted id="slot_a">
+				<source src="video/placeholder_a.m4v" id="slot_a_source" type="video/mp4">
+			</video>
+			
+			<video loop autoplay muted id="slot_b" >
+				<source src="video/placeholder_b.m4v" id="slot_b_source" type="video/mp4">
+			</video>
+			
+			<video loop autoplay muted id="slot_c">
+				<source src="video/placeholder_c.m4v" id="slot_c_source" type="video/mp4">
+			</video>
+	
+			<span id="label" style="position: fixed; left : 155px; bottom: 30px;">
+			A
+			</span>
+			<span id="label" style="position: fixed; left : 475px; bottom: 30px;">
+			B
+			</span>
+			<span id="label" style="position: fixed; left : 795px; bottom: 30px;">
+			C
+			</span>
+	
+			<!-- Orologio -->
+			<div id="clock">
+			</div>
+		</div>
+
+		<script>
+			clock = new tanzoClock("clock","Tango Wall","Acme");		
+		</script>
+	</div>
+</body>
+</html>

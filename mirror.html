@@ -1,0 +1,110 @@
+<!-- Mirrow -->
+<!-- https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<title>Mirror</title>
+
+	<script src= "js/paho-mqtt-min.js"     type="text/javascript"></script>
+	<script src= "js/jquery-3.3.1.min.js"  type="text/javascript"></script>
+
+	<style>
+		#cam_x1y1 {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 50px;
+        	left: 0px;
+        	width: 640px;
+        	height: 480px;
+        	/* transform: scaleX(-1);
+        	transform: scaleY(-1); */
+		}
+
+		#cam_x2y1 {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 50px;
+        	left: 640px;
+        	width: 640px;
+        	height: 480px;
+        	/* transform: scaleX(-1);
+        	transform: scaleY(-1); */
+		}
+
+		body { 
+			background-color: black;
+			color: white;
+			margin: 0px;
+        	padding: 0px;
+		}		
+	</style>
+
+	<script>
+		var mqtt_broker="camserver.local";
+		var mqtt_port=1884;
+		var mqtt_mainpage_client;
+
+		// Genera una stringa random di caratteri
+		// Viane usata per le funzioni MQTT
+		var randomString = function(length) {
+		    var text = "";
+		    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		    for(var i = 0; i < length; i++) {
+		        text += possible.charAt(Math.floor(Math.random() * possible.length));
+		    }
+		    return text;
+		}
+		
+		function onConnect() {
+			mqtt_mainpage_client.subscribe("tangowall/cmd");
+		}	
+		
+		function onMessageArrived(message) {
+			console.log(message.payloadString);
+
+			json_data = JSON.parse(message.payloadString);
+
+			// Visibility
+			if (json_data.cmd=="visibility") {
+				//var element=document.getElementById(json_data.element); 
+		
+				//element.style.visibility=json_data.value;
+		
+				if (json_data.value===false) {
+					$("#" + json_data.element).fadeOut();
+				} else {
+					$("#" + json_data.element).fadeIn();
+				}
+			}    
+
+			// Refresh della pagina
+			if (json_data.cmd=="loadpage") {
+				$("#all").fadeOut("slow",function() {
+					document.location.href = json_data.value;
+				});
+			}
+			
+		}
+		
+		$(document).ready(function() {
+			// Interpretazione messaggi MQTT in arrivo
+			mqtt_mainpage_client = new Paho.MQTT.Client(mqtt_broker, Number(mqtt_port), "/ws",randomString(20));
+			mqtt_mainpage_client.onMessageArrived=onMessageArrived;
+			mqtt_mainpage_client.connect({
+				onSuccess:onConnect
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div id="all">
+		<iframe id="cam_x1y1" src="http://tangocam1.local:8765/picture/1/frame/"></iframe>
+		<iframe id="cam_x2y1" src="http://tangocam2.local:8765/picture/1/frame/"></iframe>
+	</div>
+</body>
+
+</html>		
+
