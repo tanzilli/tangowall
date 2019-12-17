@@ -1,0 +1,173 @@
+<!-- TANGOWALL -->
+<!-- https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<script src= "js/paho-mqtt-min.js"></script>
+	<script src= "js/jquery-3.3.1.min.js"></script>
+	<script src= "js/main.js"></script>
+	<script src= "js/twidgets.js"></script>
+
+	<!-- https://github.com/sampotts/plyr -->
+	<link   href="https://cdn.plyr.io/3.5.6/plyr.css" rel="stylesheet"/>
+	<script src="https://cdn.plyr.io/3.5.6/plyr.js"></script>
+
+	<style>
+		* { 
+			padding: 0;
+			margin: 0;
+		}
+
+		body { 
+			background-color: black;
+			padding: 0;
+			margin: 0;
+			color: #FFFFFF; 
+		}
+
+		#label {
+			color: white; 
+			font-size: 64px;
+		}
+		
+		#video_big {
+			position: fixed; 
+			left: 0px; 
+			top: 0px; 
+			display: none;
+		}
+
+		#slot_a {
+			position: fixed; 
+			left: 5px; 
+			top: 10px; 
+			width: 300px;
+		}
+
+		#slot_b {
+			position: fixed;
+			left: 325px;
+			top: 10px;
+			width: 300px;"
+		}
+
+		#slot_c {
+			position: fixed;
+			left: 645px;
+			top: 10px;
+			width: 300px;
+		}
+
+		#clock {
+			position: fixed;
+			left : 965px;
+			top: 80px;
+			width: 300px;
+		}
+		
+		.container {
+			margin: 50px auto;
+			max-width: 80%;
+		}
+
+		#mirrow_2_layer {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 0px;
+        	left: 0px;
+        	transform: scale(0.5,0.5);
+		}
+
+		#cam_x1y1 {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 0px;
+        	left: 0px;
+        	width: 1280px;
+        	height: 640px;
+		}
+
+		#cam_x2y1 {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 0px;
+        	left: 1280px;
+        	width: 1280px;
+        	height: 640px;
+		}
+
+	</style>
+
+</head>
+<body>
+	
+	<!--************************************************************-->
+	<!--************************************************************-->
+	<!-- TangoWall layer                                            -->	
+	<!--************************************************************-->
+	<!--************************************************************-->
+	
+	<div id="tangowall_layer" hidden>
+		<!-- Video Slot -->
+		<div id="video_slot">
+			<video loop autoplay muted id="slot_a">
+				<source src="video/placeholder_a.m4v" id="slot_a_source" type="video/mp4">
+			</video>
+			
+			<video loop autoplay muted id="slot_b" >
+				<source src="video/placeholder_b.m4v" id="slot_b_source" type="video/mp4">
+			</video>
+			
+			<video loop autoplay muted id="slot_c">
+				<source src="video/placeholder_c.m4v" id="slot_c_source" type="video/mp4">
+			</video>
+	
+			<span id="label" style="position: fixed; left : 155px; bottom: 30px;">
+			A
+			</span>
+			<span id="label" style="position: fixed; left : 475px; bottom: 30px;">
+			B
+			</span>
+			<span id="label" style="position: fixed; left : 795px; bottom: 30px;">
+			C
+			</span>
+	
+			<!-- Orologio -->
+			<div id="clock">
+			</div>
+		</div>
+
+		<script>
+			clock = new tanzoClock("clock","Tango Wall","Acme");		
+		</script>
+	</div>
+
+	<!--************************************************************-->
+	<!--************************************************************-->
+	<!-- PartyWall layer                                            -->	
+	<!--************************************************************-->
+	<!--************************************************************-->
+
+	<div id="partywall_layer" hidden>
+		<div class="container">
+			<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="zymRNmdzF2k"></div>
+		</div>
+	</div>
+
+	<!--************************************************************-->
+	<!--************************************************************-->
+	<!-- Mirrow                                                     -->	
+	<!--************************************************************-->
+	<!--************************************************************-->
+
+	<div id="mirror_2_layer" hidden>
+		<iframe id="cam_x1y1" src="http://tangocam1.local:8001/stream.mjpg"></iframe>
+	</div>
+
+
+
+</body>
+</html>
