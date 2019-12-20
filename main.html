@@ -66,8 +66,8 @@
 		}
 		
 		.container {
-			margin: 50px auto;
-			max-width: 80%;
+			margin: 20px auto;
+			max-width: 70%;
 		}
 
 		#mirrow_2_layer {
@@ -77,6 +77,15 @@
         	top: 0px;
         	left: 0px;
         	transform: scale(0.5,0.5);
+		}
+
+		#frame_layer {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 0px;
+        	left: 0px;
+			z-index: 2;
 		}
 
 		#cam_x1y1 {
@@ -151,22 +160,29 @@
 	<!--************************************************************-->
 	<!--************************************************************-->
 
-	<div id="partywall_layer" hidden>
-		<div class="container">
+	<div class="container">
+		<div id="partywall_layer" hidden>
 			<div id="player" data-plyr-provider="youtube" data-plyr-embed-id="zymRNmdzF2k"></div>
 		</div>
 	</div>
-
+	
 	<!--************************************************************-->
 	<!--************************************************************-->
 	<!-- Mirrow                                                     -->	
 	<!--************************************************************-->
 	<!--************************************************************-->
 
-	<div id="mirror_2_layer" hidden>
+	<div id="tangocam1_layer" hidden>
 		<iframe id="cam_x1y1" src="http://tangocam1.local:8001/stream.mjpg"></iframe>
 	</div>
 
+	<div id="tangocam2_layer" hidden>
+		<iframe id="cam_x1y1" src="http://tangocam2.local:8001/stream.mjpg"></iframe>
+	</div>
+
+	<div id="frame_layer" hidden>
+		<img id="frame_img" src="images/christmas2.png">
+	</div>
 
 
 </body>

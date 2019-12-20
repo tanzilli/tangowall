@@ -3,6 +3,7 @@
 var mqtt_broker="camserver.local";
 var mqtt_port=1884;
 var mqtt_mainpage_client;
+var player;
 
 
 // Genera una stringa random di caratteri
@@ -28,21 +29,35 @@ function onMessageArrived(message) {
 	if (json_data.cmd=="tangowall_layer") {
 		$("#tangowall_layer").fadeIn();
 		$("#partywall_layer").fadeOut();
-		$("#mirror_2_layer").fadeOut();
+		$("#tangocam1_layer").fadeOut();
+		$("#tangocam2_layer").fadeOut();
+		$("#frame_layer").fadeOut();
 		return;
 	}
 
 	if (json_data.cmd=="partywall_layer") {
 		$("#tangowall_layer").fadeOut();
 		$("#partywall_layer").fadeIn();
-		$("#mirror_2_layer").fadeOut();
+		$("#tangocam1_layer").fadeOut();
+		$("#tangocam2_layer").fadeOut();
 		return;
 	}
 
-	if (json_data.cmd=="mirror_2_layer") {
+	if (json_data.cmd=="tangocam1_layer") {
 		$("#tangowall_layer").fadeOut();
 		$("#partywall_layer").fadeOut();
-		$("#mirror_2_layer").fadeIn();
+		$("#tangocam1_layer").fadeIn();
+		$("#tangocam2_layer").fadeOut();
+		$("#frame_layer").fadeOut();
+		return;
+	}
+
+	if (json_data.cmd=="tangocam2_layer") {
+		$("#tangowall_layer").fadeOut();
+		$("#partywall_layer").fadeOut();
+		$("#tangocam1_layer").fadeOut();
+		$("#tangocam2_layer").fadeIn();
+		$("#frame_layer").fadeOut();
 		return;
 	}
 
@@ -139,19 +154,32 @@ function onMessageArrived(message) {
 		        },
 		    ],
 		};
+		return;
 	}	
 		
 	if (json_data.cmd=="youtube_pause") {
 		player.pause();
+		player.fullscreen.enter();
 		return;
 	}
 	
 	if (json_data.cmd=="youtube_play") {
 		player.play();
+		player.fullscreen.enter();
 		return;
 	}
 
+	if (json_data.cmd=="youtube_fullscreen.enter") {
+		player.fullscreen.enter();
+		console.log("Enter 2");
+		return;
+	}
 
+	if (json_data.cmd=="youtube_fullscreen.exit") {
+		player.fullscreen.exit();
+		console.log("Exit 2");
+		return;
+	}
 
 
 	// Refresh della pagina
@@ -215,7 +243,8 @@ $(document).ready(function() {
 
 	// Change the second argument to your options:
 	// https://github.com/sampotts/plyr/#options
-	const player = new Plyr('#player', {captions: {active: true}});
+	//const player = new Plyr('#player', {captions: {active: true}});
+	player = new Plyr('#player', {captions: {active: true}});
 	
 	// Expose player so it can be used from the console
 	window.player = player;
