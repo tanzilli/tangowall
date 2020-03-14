@@ -21,43 +21,75 @@ function onConnect() {
 	mqtt_mainpage_client.subscribe("tangowall/cmd");
 }	
 
+
+function hideAllLayers() {
+	console.log("HideAllLayer");
+	$("#tangowall_layer").fadeOut();
+	$("#partywall_layer").fadeOut();
+
+	$("#tangocam_layer").fadeIn();
+	$("#tangocam_frame").attr("src","")
+
+	$("#cam_layer").fadeOut();
+	$("#cam1_frame").attr("src","")
+
+	$("#frame_layer").fadeOut();
+	$("#bigclock_layer").fadeOut();
+}
+
 function onMessageArrived(message) {
 
 	console.log(message.payloadString);
 	json_data = JSON.parse(message.payloadString);
 
 	if (json_data.cmd=="tangowall_layer") {
+		hideAllLayers();
 		$("#tangowall_layer").fadeIn();
-		$("#partywall_layer").fadeOut();
-		$("#tangocam1_layer").fadeOut();
-		$("#tangocam2_layer").fadeOut();
-		$("#frame_layer").fadeOut();
 		return;
 	}
 
 	if (json_data.cmd=="partywall_layer") {
-		$("#tangowall_layer").fadeOut();
+		hideAllLayers();
 		$("#partywall_layer").fadeIn();
-		$("#tangocam1_layer").fadeOut();
-		$("#tangocam2_layer").fadeOut();
 		return;
 	}
 
-	if (json_data.cmd=="tangocam1_layer") {
-		$("#tangowall_layer").fadeOut();
-		$("#partywall_layer").fadeOut();
-		$("#tangocam1_layer").fadeIn();
-		$("#tangocam2_layer").fadeOut();
-		$("#frame_layer").fadeOut();
+	if (json_data.cmd=="tangocam_layer") {
+		hideAllLayers();
+		$("#tangocam_frame").attr("src","http://tangocam2.local:8001/stream.mjpg")
+		$("#tangocam_layer").fadeIn();
 		return;
 	}
 
-	if (json_data.cmd=="tangocam2_layer") {
+	if (json_data.cmd=="cam_layer") {
+		hideAllLayers();
+		$("#cam1_frame").attr("src","http://cam1.local:8001/stream.mjpg")
+		$("#cam2_frame").attr("src","http://cam2.local:8001/stream.mjpg")
+		$("#cam3_frame").attr("src","http://tangocam2.local:8001/stream.mjpg")
+		$("#cam4_frame").attr("src","http://cam1.local:8001/stream.mjpg")
+		$("#cam5_frame").attr("src","http://cam2.local:8001/stream.mjpg")
+		$("#cam6_frame").attr("src","http://tangocam2.local:8001/stream.mjpg")
+		$("#cam_layer").fadeIn();
+		return;
+	}
+
+	if (json_data.cmd=="bigclock_layer") {
 		$("#tangowall_layer").fadeOut();
 		$("#partywall_layer").fadeOut();
-		$("#tangocam1_layer").fadeOut();
-		$("#tangocam2_layer").fadeIn();
+		$("#tangocam_layer").fadeOut();
+		$("#cam_layer").fadeOut();
 		$("#frame_layer").fadeOut();
+		$("#bigclock_layer").fadeIn();
+		return;
+	}
+
+	if (json_data.cmd=="hide_all_layers") {
+		$("#tangowall_layer").fadeOut();
+		$("#partywall_layer").fadeOut();
+		$("#tangocam_layer").fadeOut();
+		$("#cam_layer").fadeOut();
+		$("#frame_layer").fadeOut();
+		$("#bigclock_layer").fadeOut();
 		return;
 	}
 

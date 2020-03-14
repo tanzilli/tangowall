@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- http://www.3quarks.com/en/SegmentDisplay/index.html-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script src="/js/segment-display.js"></script>
+
+    <script>
+		var display = new SegmentDisplay("display");
+		
+		  display.pattern         = "##:##:##";
+		  display.displayAngle    = 10;
+		  display.digitHeight     = 25;
+		  display.digitWidth      = 10;
+		  display.digitDistance   = 2.5;
+		  display.segmentWidth    = 2.5;
+		  display.segmentDistance = 0.5;
+		  display.segmentCount    = 7;
+		  display.cornerType      = 3;
+		  display.colorOn         = "#006F00";
+		  display.colorOff        = "#000400";
+		  display.draw();		
+		animate();
+		
+		function animate() {
+			var time    = new Date();
+			var hours   = time.getHours();
+			var minutes = time.getMinutes();
+			var seconds = time.getSeconds();
+			var value   = ((hours < 10) ? ' ' : '') + hours
+			            + ':' + ((minutes < 10) ? '0' : '') + minutes
+			            + ':' + ((seconds < 10) ? '0' : '') + seconds;
+			display.setValue(value);
+			window.setTimeout('animate()', 100);
+		}
+    </script>
+ 
+	<style>
+		body { 
+			background-color: black;
+			color: white;
+		}		
+		
+		canvas {
+			border: 0px;
+			margin: 0px;
+			position: fixed; 
+			left: 0px; 
+			top: 0px; 
+			width: 1000px;
+			height: 560px;
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id="display"></canvas>
+</body>
+</html>		

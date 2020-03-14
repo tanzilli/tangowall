@@ -1,0 +1,54 @@
+<!-- TANGOWALL -->
+<!-- https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<script src= "js/paho-mqtt-min.js"></script>
+	<script src= "js/jquery-3.3.1.min.js"></script>
+	<script src= "js/cams.js"></script>
+
+	<style>
+		* { 
+			padding: 0;
+			margin: 0;
+		}
+
+		body { 
+			background-color: black;
+			padding: 0;
+			margin: 0;
+			color: #FFFFFF; 
+		}
+
+		#cam_layer {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: -233px;
+        	left: -582px;
+        	transform: scale(0.5,0.5);
+		}
+
+		.cam_frame {
+			margin: 0px;
+        	padding: 0px;
+        	width: 640px;
+        	height: 480px;
+			border: 0px; 
+        	/* transform: scale(0.5,0.5); */
+		}
+	</style>
+</head>
+<body>
+
+	<div id="cam_layer" hidden>
+		<iframe class="cam_frame" id="cam1_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam2_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam3_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam4_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam5_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam6_frame" src=""></iframe>
+	</div>
+
+</body>
+</html>

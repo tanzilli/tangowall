@@ -1,12 +1,13 @@
 [ 
-    { "id":"Gcxv7i02lXc","author":"Carlos Gardel","title" :"Por una Cabeza"},
-    { "id":"zcZeaUZve88","author":"Destiny","title" :"El Choclo"},
     { "id":"8WpAnKVeJpw","author":"Orquesta Romantica Milonguera","title" :"Poema"},
+    { "id":"zcZeaUZve88","author":"Destiny","title" :"El Choclo"},
+    { "id":"gI7zKMHWAIs","author":"Orquesta Romantica Milonguera","title" :"Todo es Amor"},
+    { "id":"d5z81hD3QCs","author":"Osvaldo Fresedo","title" :"Isla de Capri"},
     { "id":"3Z5qEKxfmm8","author":"Juan Darienzo","title" :"Loca"},
     { "id":"uoprxPYqjv8","author":"miguel caló y raul beron","title" :"que te importa que te llore"},
     { "id":"NUSQtNHOgTI","author":"Pugliese & Maciel","title" :"Esta noche de luna"},
     { "id":"7uya-FWs62Y","author":"D'Arienzo","title" :"Echagüe Paciencia"},
-    { "id":"ZVQ68DwqbX8","author":"Carlos Gardel","title" :"Echagüe A media luz"},
     { "id":"BJnIzpmcEks","author":"Javier Di Ciriaco","title" :"Tanda de Tango: Sexteto Milonguero"},
-    { "id":"ZVQ68DwqbX8","author":"Carlos Gardel","title" :"Echagüe A media luz"}
+    { "id":"ZVQ68DwqbX8","author":"Carlos Gardel","title" :"Echagüe A media luz"},
+    { "id":"Gcxv7i02lXc","author":"Carlos Gardel","title" :"Por una Cabeza"}
 ]

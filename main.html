@@ -6,7 +6,7 @@
 	<script src= "js/paho-mqtt-min.js"></script>
 	<script src= "js/jquery-3.3.1.min.js"></script>
 	<script src= "js/main.js"></script>
-	<script src= "js/twidgets.js"></script>
+	<script src= "js/widget_clock.js"></script>
 
 	<!-- https://github.com/sampotts/plyr -->
 	<link   href="https://cdn.plyr.io/3.5.6/plyr.css" rel="stylesheet"/>
@@ -58,16 +58,24 @@
 			width: 300px;
 		}
 
-		#clock {
+		#round_clock {
 			position: fixed;
-			left : 965px;
-			top: 80px;
-			width: 300px;
+			left : 910px;
+			top: -40px;
+			transform: scale(0.6,0.6);
 		}
 		
+		#cam_layer {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 0px;
+        	left: 0px;
+		}
+
 		.container {
 			margin: 20px auto;
-			max-width: 70%;
+			max-width: 80%;
 		}
 
 		#mirrow_2_layer {
@@ -85,10 +93,11 @@
         	padding: 0px;
         	top: 0px;
         	left: 0px;
-			z-index: 2;
+			z-index: 4;
 		}
 
-		#cam_x1y1 {
+
+		#tangocam_layer {
 			position: fixed;
 			margin: 0px;
         	padding: 0px;
@@ -96,16 +105,56 @@
         	left: 0px;
         	width: 1280px;
         	height: 640px;
+			border: 0px; 
+        	/*transform: scale(2,2);*/
 		}
 
-		#cam_x2y1 {
+		#tangocam_frame {
 			position: fixed;
 			margin: 0px;
         	padding: 0px;
         	top: 0px;
-        	left: 1280px;
+        	left: 0px;
         	width: 1280px;
         	height: 640px;
+			border: 0px; 
+        	/*transform: scale(2,2);*/
+		}
+
+		#cam_layer {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: -233px;
+        	left: -582px;
+        	transform: scale(0.5,0.5);
+		}
+
+		.cam_frame {
+			margin: 0px;
+        	padding: 0px;
+        	width: 640px;
+        	height: 480px;
+			border: 0px; 
+        	/* transform: scale(0.5,0.5); */
+		}
+
+
+		#bigclock_layer {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 0px;
+        	left: 0px;
+        	width: 1280px;
+        	height: 640px;
+			z-index: 3;
+		}
+
+		#bigclock_frame {
+        	width: 1280px;
+        	height: 640px;
+			border: 0px; 
 		}
 
 	</style>
@@ -145,12 +194,12 @@
 			</span>
 	
 			<!-- Orologio -->
-			<div id="clock">
+			<div id="round_clock">
 			</div>
 		</div>
 
 		<script>
-			clock = new tanzoClock("clock","Tango Wall","Acme");		
+			clock = new tanzoClock("round_clock","Tango Wall","Acme Systems");		
 		</script>
 	</div>
 
@@ -172,16 +221,25 @@
 	<!--************************************************************-->
 	<!--************************************************************-->
 
-	<div id="tangocam1_layer" hidden>
-		<iframe id="cam_x1y1" src="http://tangocam1.local:8001/stream.mjpg"></iframe>
-	</div>
-
-	<div id="tangocam2_layer" hidden>
-		<iframe id="cam_x1y1" src="http://tangocam2.local:8001/stream.mjpg"></iframe>
+	<div id="tangocam_layer" hidden>
+		<iframe id="tangocam_frame" src="http://tangocam2.local:8001/stream.mjpg"></iframe>
 	</div>
 
 	<div id="frame_layer" hidden>
-		<img id="frame_img" src="images/christmas2.png">
+		<img id="frame_img" src="images/happy_new_year.png">
+	</div>
+
+	<div id="bigclock_layer" hidden>
+		<iframe id="bigclock_frame" src="bigclock.html"></iframe>
+	</div>
+
+	<div id="cam_layer" hidden>
+		<iframe class="cam_frame" id="cam1_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam2_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam3_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam4_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam5_frame" src=""></iframe>
+		<iframe class="cam_frame" id="cam6_frame" src=""></iframe>
 	</div>
 
 

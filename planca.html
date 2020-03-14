@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+Pagina da paura
+</title>
+
+<style>
+	body {
+		background-color: black;
+	}
+	
+	.paragrafo {
+		color: white;
+		font-style: italic; 
+	}
+	.notifica {
+		color: red;
+	}
+	
+	.nota {
+		color: #7F7F7F;
+	}	
+</style>
+
+
+<script src= "js/jquery-3.3.1.min.js"></script>
+
+<script>
+	var contatore=0;
+
+	function conta() {
+		contatore+=1;
+		$("#contatore").html(contatore);
+		if (contatore===3) {
+			alert("Ciao");
+		}
+	}
+
+	$(document).ready(function() {
+		setInterval(conta, 1000);
+	});
+</script>
+
+</head>
+<body>
+
+<p class="paragrafo" id="contatore">
+	Questo è un paragrafo generico
+</p>
+
+</body>
+</html>
