@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<script src="js/paho-mqtt-min.js"></script>
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/tangotv.js"></script>
+
+	<!-- https://purecss.io -->
+	<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+
+	<!-- https://fontawesome.com/ -->
+	<script src="https://kit.fontawesome.com/cc20227e93.js" crossorigin="anonymous"></script>
+
+	<!-- http://fabricjs.com/ -->
+	<script src="https://unpkg.com/fabric@4.0.0-beta.7/dist/fabric.js"></script>
+
+
+	<style>
+		* { 
+			padding: 0;
+			margin: 0;
+		}
+
+		body { 
+			background-color: black;
+			padding: 0;
+			margin: 0;
+			color: #FFFFFF; 
+		}
+
+        .pure-button {
+        	width: 140px;
+        	height: 80px;
+        	margin: 10px;
+            font-size: 150%;
+            border-radius: 6px;
+            text-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+        }
+
+		#video_layer {
+			position: absolute;
+			margin: 0px;
+        	padding: 0px;
+        	top: 10px;
+        	left: 10px;
+        	width: 1280px;
+        	z-index: 0;
+        	display: block;
+        	/* transform: scale(0.5,0.5); */
+		}
+
+		#draw_layer {
+			position: absolute;
+			margin: 0px;
+        	padding: 0px;
+        	top: 10px;
+        	left: 10px;
+        	width: 1280px;
+        	z-index: 0;
+        	display: block;
+        	/* transform: scale(0.5,0.5); */
+		}
+
+		#c {
+        	top: 10px;
+        	left: 10px;
+        	width: 1280px;
+		}
+
+		#video_player {
+        	width: 100%;
+		}
+
+		#buttons_layer {
+			position: fixed;
+			margin: 0px;
+        	padding: 0px;
+        	top: 10px;
+        	left: 1300px;
+        	z-index: 0;
+        	/* transform: scale(0.5,0.5); */
+		}
+		
+		#drop_zone {
+			background-color: #EEE;
+			border: #999 5px dashed;
+			width:290px;
+			height: 200px;
+			padding 8px;
+			font-size: 18px;
+		}
+
+		progress[value] {
+		  /* Reset the default appearance */
+		  -webkit-appearance: none;
+		   appearance: none;
+		
+		  width: 250px;
+		  height: 20px;
+		}
+		
+		progress[value]::-webkit-progress-bar {
+			background-color: #eee;
+			border-radius: 2px;
+			box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+		}
+
+	</style>
+</head>
+<body ondrop="drag_drop(event)" ondragover="return false">
+
+	<div id="video_layer">
+		<video id="video_player" ondragover="return false">
+			<source id="mp4" src="video/Sebastian Achaval y Roxana Suarez .mp4" type="video/mp4" >
+		</video>
+	</div>
+
+	<div id="draw_layer">
+		<canvas id="c" width="1280" height="800"></canvas>
+	</div>
+	
+	<!-- https://www.w3schools.com/tags/ref_av_dom.asp -->
+	<div id="buttons_layer">
+		<span id="button1"><button onclick="videoPlay()" class="pure-button pure-button-primary">Play</button></span>
+		<br/>
+		<button onclick="videoPlaybackRate(0.5)" class="pure-button pure-button-primary">Slow</button> 
+		<button onclick="videoPlaybackRate(1)" class="pure-button pure-button-primary">Normal</button> 
+		<br/>
+		<button onclick="videoSeek(-1)" class="pure-button pure-button-primary">-1</button> 
+		<button onclick="videoSeek(1)" class="pure-button pure-button-primary">+1</button> 
+		<br/>
+		
+		<!--<div id="drop_zone" ondrop="drag_drop(event)" ondragover="return false">
+		</div>-->
+
+		<br/>
+		<progress id="progressBar" value="0" max="100" style="width:300px;">Ciao</progress>
+		
+		<h3 id="status"></h3>
+		<p id="loaded_n_total"></p>
+
+
+	</div>
+	
+
+	
+</body>
+</html>

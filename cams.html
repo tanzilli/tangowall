@@ -1,5 +1,3 @@
-<!-- TANGOWALL -->
-<!-- https://github.com/ccrisan/motioneye/wiki/Install-On-Raspbian -->
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -21,12 +19,12 @@
 		}
 
 		#cam_layer {
-			position: fixed;
+			/*position: fixed;
 			margin: 0px;
         	padding: 0px;
-        	top: -233px;
-        	left: -582px;
-        	transform: scale(0.5,0.5);
+        	top: -116px;
+        	left: -473px;
+        	transform: scale(0.5,0.5);*/
 		}
 
 		.cam_frame {
@@ -42,12 +40,11 @@
 <body>
 
 	<div id="cam_layer" hidden>
-		<iframe class="cam_frame" id="cam1_frame" src=""></iframe>
-		<iframe class="cam_frame" id="cam2_frame" src=""></iframe>
-		<iframe class="cam_frame" id="cam3_frame" src=""></iframe>
-		<iframe class="cam_frame" id="cam4_frame" src=""></iframe>
-		<iframe class="cam_frame" id="cam5_frame" src=""></iframe>
-		<iframe class="cam_frame" id="cam6_frame" src=""></iframe>
+		<iframe class="cam_frame" id="frame1" src=""></iframe>
+		<iframe class="cam_frame" id="frame2" src="" ></iframe>
+		<!--<iframe class="cam_frame" id="cam3_frame" src="" style="transform: rotate(180deg);"></iframe>-->
+		<iframe class="cam_frame" id="frame3" src=""></iframe>
+		<iframe class="cam_frame" id="frame4" src=""></iframe>
 	</div>
 
 </body>

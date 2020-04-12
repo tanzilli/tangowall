@@ -31,12 +31,17 @@ $(document).ready(function() {
 	mqtt_mainpage_client.connect({
 		onSuccess:onConnect
 	});
+	// Cancello
+	$("#frame1").attr("src","http://cam3.local:8001/stream.mjpg")
 
-	$("#cam1_frame").attr("src","http://cam1.local:8001/stream.mjpg")
-	$("#cam2_frame").attr("src","http://cam2.local:8001/stream.mjpg")
-	$("#cam3_frame").attr("src","http://tangocam2.local:8001/stream.mjpg")
-	$("#cam4_frame").attr("src","http://cam1.local:8001/stream.mjpg")
-	$("#cam5_frame").attr("src","http://cam2.local:8001/stream.mjpg")
-	$("#cam6_frame").attr("src","http://tangocam2.local:8001/stream.mjpg")
+	// Ingresso primo piano
+	$("#frame2").attr("src","http://cam1.local:8001/stream.mjpg")
+
+	// Ufficio primo piano
+	$("#frame3").attr("src","http://cam2.local:8001/stream.mjpg")
+
+	$("#frame4").attr("src","http://cam4.local:8001/stream.mjpg")
+
+
 	$("#cam_layer").fadeIn();
 });
